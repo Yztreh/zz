@@ -56,12 +56,26 @@
             .hover-scale:hover {
                 transform: scale(1.05);
             }
+            .spin-slow {
+                animation: spin 8s linear infinite;
+            }
+            .spin-pause {
+                animation-play-state: paused;
+            }
+            .spin-play {
+                animation-play-state: running;
+            }
         }
         
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
     </style>
     
@@ -72,8 +86,21 @@
 </head>
 
 <body class="font-sans text-light bg-dark overflow-x-hidden">
+    <!-- 背景音乐 -->
+    <audio id="bgMusic" loop>
+        <source src="https://dlink.host/musics/aHR0cHM6Ly9vbmVkcnYtbXkuc2hhcmVwb2ludC5jb20vOnU6L2cvcGVyc29uYWwvc3Rvcl9vbmVkcnZfb25taWNyb3NvZnRfY29tL0VRUXB5N01ocXZ0TGp6aGdhZS1PWHYwQmRPdVh2MUtuQTFhR0JNMXBKdFNOTUE.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <!-- 音乐控制按钮 -->
+    <button id="musicControl" class="fixed bottom-6 right-6 z-50 bg-primary/90 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-primary transition-all duration-300 transform hover:scale-110">
+        <div class="spin-slow spin-pause">
+            <i class="fa fa-music text-xl"></i>
+        </div>
+    </button>
+
     <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
+    <header id="navbar" class="fixed w-full z-40 transition-all duration-300">
         <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
             <a href="#" class="text-2xl font-display font-bold text-white text-shadow">维尔茨</a>
             
@@ -551,6 +578,51 @@
                     });
                 }
             });
+        });
+        
+        // 背景音乐控制
+        const bgMusic = document.getElementById('bgMusic');
+        const musicControl = document.getElementById('musicControl');
+        const musicIcon = musicControl.querySelector('div');
+        
+        // 初始状态 - 音乐暂停
+        let isPlaying = false;
+        
+        // 音乐控制按钮点击事件
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                // 暂停音乐
+                bgMusic.pause();
+                musicIcon.classList.remove('spin-play');
+                musicIcon.classList.add('spin-pause');
+                musicControl.classList.remove('bg-primary');
+                musicControl.classList.add('bg-primary/50');
+            } else {
+                // 播放音乐
+                bgMusic.play();
+                musicIcon.classList.remove('spin-pause');
+                musicIcon.classList.add('spin-play');
+                musicControl.classList.remove('bg-primary/50');
+                musicControl.classList.add('bg-primary');
+            }
+            isPlaying = !isPlaying;
+        });
+        
+        // 为解决浏览器自动播放限制，在用户第一次交互时播放音乐
+        document.addEventListener('click', function startMusic() {
+            if (!isPlaying) {
+                bgMusic.play().catch(e => {
+                    // 处理自动播放被阻止的情况
+                    console.log('自动播放被阻止:', e);
+                });
+                isPlaying = true;
+                musicIcon.classList.remove('spin-pause');
+                musicIcon.classList.add('spin-play');
+                musicControl.classList.remove('bg-primary/50');
+                musicControl.classList.add('bg-primary');
+            }
+            // 移除事件监听器，避免重复触发
+            document.removeEventListener('click', startMusic);
         });
     </script>
 </body>
