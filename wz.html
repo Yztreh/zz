@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>维尔茨 | 足球新星</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind主题 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#165DFF',
+                        secondary: '#FF7D00',
+                        dark: '#1E293B',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif']
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .parallax {
+                background-attachment: fixed;
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .text-shadow-lg {
+                text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+            .hover-scale {
+                transition: transform 0.3s ease;
+            }
+            .hover-scale:hover {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+    
+    <!-- 预加载字体 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="font-sans text-light bg-dark overflow-x-hidden">
+    <!-- 导航栏 -->
+    <header id="navbar" class="fixed w-full z-50 transition-all duration-300">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="text-2xl font-display font-bold text-white text-shadow">维尔茨</a>
+            
+            <!-- 桌面导航 -->
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="text-white hover:text-secondary transition-colors duration-300">首页</a>
+                <a href="#about" class="text-white hover:text-secondary transition-colors duration-300">个人简介</a>
+                <a href="#stats" class="text-white hover:text-secondary transition-colors duration-300">比赛数据</a>
+                <a href="#highlights" class="text-white hover:text-secondary transition-colors duration-300">精彩瞬间</a>
+                <a href="#news" class="text-white hover:text-secondary transition-colors duration-300">最新动态</a>
+            </div>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuBtn" class="md:hidden text-white text-2xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </nav>
+        
+        <!-- 移动端导航菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark/95 backdrop-blur-md absolute w-full">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-4">
+                <a href="#home" class="text-white hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">首页</a>
+                <a href="#about" class="text-white hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">个人简介</a>
+                <a href="#stats" class="text-white hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">比赛数据</a>
+                <a href="#highlights" class="text-white hover:text-secondary transition-colors duration-300 py-2 border-b border-gray-700">精彩瞬间</a>
+                <a href="#news" class="text-white hover:text-secondary transition-colors duration-300 py-2">最新动态</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区域 -->
+    <main>
+        <!-- 英雄区域 -->
+        <section id="home" class="parallax h-screen flex items-center justify-center relative" style="background-image: url('https://img.picui.cn/free/2025/06/13/684bc8da09dc9.png');">
+            <div class="absolute inset-0 bg-dark/60"></div>
+            <div class="container mx-auto px-4 z-10 text-center">
+                <h1 class="text-[clamp(2.5rem,8vw,5rem)] font-display font-extrabold text-white mb-4 text-shadow-lg animate-float">
+                    尤利安·维尔茨
+                </h1>
+                <p class="text-[clamp(1.2rem,3vw,1.8rem)] font-medium text-white/90 mb-8 text-shadow">
+                    足球天才 | 中场大师
+                </p>
+                <a href="#about" class="inline-block bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1">
+                    了解更多
+                </a>
+            </div>
+            
+            <!-- 向下滚动指示器 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <a href="#about" class="text-white text-3xl opacity-80 hover:opacity-100 transition-opacity">
+                    <i class="fa fa-angle-down"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 个人简介区域 -->
+        <section id="about" class="py-20 bg-dark/95">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto">
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-white mb-6 text-center">个人简介</h2>
+                    <p class="text-gray-300 mb-4 text-lg">
+                        尤利安·维尔茨（Julian Wirtz）是一名德国足球运动员，司职中场，现效力于德甲俱乐部勒沃库森。他被广泛认为是足球界最有前途的年轻球员之一。
+                    </p>
+                    <p class="text-gray-300 mb-6 text-lg">
+                        维尔茨以其出色的技术、视野和传球能力而闻名，同时他在中场的防守贡献也令人印象深刻。尽管年纪轻轻，但他已经展现出了成熟的比赛阅读能力和决策能力。
+                    </p>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-dark/50 p-4 rounded-lg border border-gray-800">
+                            <p class="text-gray-400 text-sm">出生日期</p>
+                            <p class="text-white font-medium">2003年5月13日</p>
+                        </div>
+                        <div class="bg-dark/50 p-4 rounded-lg border border-gray-800">
+                            <p class="text-gray-400 text-sm">出生地</p>
+                            <p class="text-white font-medium">德国亚琛</p>
+                        </div>
+                        <div class="bg-dark/50 p-4 rounded-lg border border-gray-800">
+                            <p class="text-gray-400 text-sm">身高</p>
+                            <p class="text-white font-medium">1.81米</p>
+                        </div>
+                        <div class="bg-dark/50 p-4 rounded-lg border border-gray-800">
+                            <p class="text-gray-400 text-sm">位置</p>
+                            <p class="text-white font-medium">中场</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <a href="#stats" class="inline-block bg-secondary hover:bg-secondary/90 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30 transform hover:-translate-y-1">
+                            查看比赛数据
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视差分隔区域 -->
+        <section class="parallax h-80 flex items-center justify-center relative" style="background-image: url('https://img.picui.cn/free/2025/06/13/684bc8da09dc9.png');">
+            <div class="absolute inset-0 bg-primary/30"></div>
+            <div class="container mx-auto px-4 z-10 text-center">
+                <h2 class="text-[clamp(2rem,5vw,3rem)] font-display font-bold text-white text-shadow-lg">
+                    "足球是我的激情，我的生活"
+                </h2>
+                <p class="text-xl text-white/90 text-shadow mt-4">—— 尤利安·维尔茨</p>
+            </div>
+        </section>
+
+        <!-- 比赛数据区域 -->
+        <section id="stats" class="py-20 bg-dark">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-white mb-4">比赛数据</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        维尔茨在职业生涯中展现了出色的表现，以下是他的关键比赛数据和成就
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- 数据卡片 1 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-futbol-o"></i>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-2">38</h3>
+                        <p class="text-gray-400">职业联赛进球</p>
+                    </div>
+                    
+                    <!-- 数据卡片 2 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-crosshairs"></i>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-2">42</h3>
+                        <p class="text-gray-400">职业联赛助攻</p>
+                    </div>
+                    
+                    <!-- 数据卡片 3 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-trophy"></i>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-2">18</h3>
+                        <p class="text-gray-400">关键球员奖项</p>
+                    </div>
+                    
+                    <!-- 数据卡片 4 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-2">128</h3>
+                        <p class="text-gray-400">职业联赛出场</p>
+                    </div>
+                </div>
+                
+                <!-- 赛季数据表格 -->
+                <div class="mt-16 bg-dark/50 rounded-xl overflow-hidden border border-gray-800">
+                    <div class="p-6 border-b border-gray-800">
+                        <h3 class="text-xl font-bold text-white">赛季数据统计</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-dark/70 text-left">
+                                    <th class="px-6 py-4 text-gray-400">赛季</th>
+                                    <th class="px-6 py-4 text-gray-400">俱乐部</th>
+                                    <th class="px-6 py-4 text-gray-400">出场</th>
+                                    <th class="px-6 py-4 text-gray-400">进球</th>
+                                    <th class="px-6 py-4 text-gray-400">助攻</th>
+                                    <th class="px-6 py-4 text-gray-400">评分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-800 hover:bg-dark/40 transition-colors">
+                                    <td class="px-6 py-4 text-white">2023/24</td>
+                                    <td class="px-6 py-4 text-white">勒沃库森</td>
+                                    <td class="px-6 py-4 text-white">34</td>
+                                    <td class="px-6 py-4 text-white">16</td>
+                                    <td class="px-6 py-4 text-white">14</td>
+                                    <td class="px-6 py-4 text-white">8.2</td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-dark/40 transition-colors">
+                                    <td class="px-6 py-4 text-white">2022/23</td>
+                                    <td class="px-6 py-4 text-white">勒沃库森</td>
+                                    <td class="px-6 py-4 text-white">38</td>
+                                    <td class="px-6 py-4 text-white">12</td>
+                                    <td class="px-6 py-4 text-white">13</td>
+                                    <td class="px-6 py-4 text-white">7.8</td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-dark/40 transition-colors">
+                                    <td class="px-6 py-4 text-white">2021/22</td>
+                                    <td class="px-6 py-4 text-white">勒沃库森</td>
+                                    <td class="px-6 py-4 text-white">32</td>
+                                    <td class="px-6 py-4 text-white">8</td>
+                                    <td class="px-6 py-4 text-white">9</td>
+                                    <td class="px-6 py-4 text-white">7.5</td>
+                                </tr>
+                                <tr class="hover:bg-dark/40 transition-colors">
+                                    <td class="px-6 py-4 text-white">2020/21</td>
+                                    <td class="px-6 py-4 text-white">勒沃库森</td>
+                                    <td class="px-6 py-4 text-white">24</td>
+                                    <td class="px-6 py-4 text-white">2</td>
+                                    <td class="px-6 py-4 text-white">6</td>
+                                    <td class="px-6 py-4 text-white">7.1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 精彩瞬间区域 -->
+        <section id="highlights" class="py-20 bg-dark/95">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-white mb-4">精彩瞬间</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        回顾维尔茨职业生涯中的精彩进球和高光时刻
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 高光卡片 1 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4 flex justify-center">
+                            <i class="fa fa-futbol-o"></i>
+                        </div>
+                        <span class="text-xs text-primary font-medium block text-center mb-2">2023年11月</span>
+                        <h3 class="text-xl font-bold text-white mb-3 text-center">对阵拜仁的关键进球</h3>
+                        <p class="text-gray-300">
+                            在对阵拜仁慕尼黑的比赛中，维尔茨在禁区外左脚抽射破门，帮助球队2-1获胜。这粒进球展现了他出色的技术和冷静的心态。
+                        </p>
+                    </div>
+                    
+                    <!-- 高光卡片 2 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4 flex justify-center">
+                            <i class="fa fa-crosshairs"></i>
+                        </div>
+                        <span class="text-xs text-primary font-medium block text-center mb-2">2024年2月</span>
+                        <h3 class="text-xl font-bold text-white mb-3 text-center">助攻帽子戏法</h3>
+                        <p class="text-gray-300">
+                            在对阵多特蒙德的比赛中，维尔茨上演助攻帽子戏法，成为德甲历史上最年轻的达成这一成就的球员。他的传球视野和精准度令人惊叹。
+                        </p>
+                    </div>
+                    
+                    <!-- 高光卡片 3 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <div class="text-primary text-4xl mb-4 flex justify-center">
+                            <i class="fa fa-trophy"></i>
+                        </div>
+                        <span class="text-xs text-primary font-medium block text-center mb-2">2024年欧洲杯</span>
+                        <h3 class="text-xl font-bold text-white mb-3 text-center">德国队核心表现</h3>
+                        <p class="text-gray-300">
+                            在2024年欧洲杯上，维尔茨作为德国队的核心中场，帮助球队打入决赛，并入选赛事最佳阵容。他在大赛中的成熟表现令人印象深刻。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#" class="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+                        查看更多精彩瞬间
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 视差分隔区域 -->
+        <section class="parallax h-80 flex items-center justify-center relative" style="background-image: url('https://img.picui.cn/free/2025/06/13/684bc8da09dc9.png');">
+            <div class="absolute inset-0 bg-secondary/30"></div>
+            <div class="container mx-auto px-4 z-10 text-center">
+                <h2 class="text-[clamp(2rem,5vw,3rem)] font-display font-bold text-white text-shadow-lg">
+                    "成功不是偶然的，它是努力、奉献和坚持的结果"
+                </h2>
+                <p class="text-xl text-white/90 text-shadow mt-4">—— 尤利安·维尔茨</p>
+            </div>
+        </section>
+
+        <!-- 最新动态区域 -->
+        <section id="news" class="py-20 bg-dark">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-white mb-4">最新动态</h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">
+                        了解维尔茨的最新消息和即将到来的比赛
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- 新闻卡片 1 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <span class="text-xs text-primary font-medium">2024年6月10日</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">维尔茨："我们的目标是赢得欧冠冠军"</h3>
+                        <p class="text-gray-400 mb-4">
+                            在最近的采访中，维尔茨表达了他对即将到来的欧冠赛季的期待，并表示球队的目标是赢得俱乐部历史上第一个欧冠冠军。
+                        </p>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium inline-flex items-center">
+                            阅读更多 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- 新闻卡片 2 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <span class="text-xs text-primary font-medium">2024年5月28日</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">维尔茨入选德国国家队欧洲杯大名单</h3>
+                        <p class="text-gray-400 mb-4">
+                            德国国家队主教练弗里克公布了参加2024年欧洲杯的26人大名单，尤利安·维尔茨再次入选，将随队征战今夏的欧洲杯。
+                        </p>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium inline-flex items-center">
+                            阅读更多 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- 新闻卡片 3 -->
+                    <div class="bg-dark/50 rounded-xl p-6 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover-scale">
+                        <span class="text-xs text-primary font-medium">2024年5月15日</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">维尔茨基金会启动青少年足球发展计划</h3>
+                        <p class="text-gray-400 mb-4">
+                            尤利安·维尔茨基金会宣布启动一项新的青少年足球发展计划，旨在为德国贫困地区的儿童提供足球训练和教育机会。
+                        </p>
+                        <a href="#" class="text-primary hover:text-primary/80 font-medium inline-flex items-center">
+                            阅读更多 <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="#" class="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-white font-medium py-3 px-8 rounded-full transition-all duration-300 transform hover:-translate-y-1">
+                        查看全部新闻
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 订阅区域 -->
+        <section class="py-20 bg-dark/95">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-display font-bold text-white mb-4">订阅最新动态</h2>
+                    <p class="text-gray-400 mb-8">
+                        订阅我们的新闻通讯，获取维尔茨的最新消息、比赛更新和独家内容
+                    </p>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                        <input type="email" placeholder="输入你的邮箱地址" class="flex-1 bg-dark/70 border border-gray-700 text-white px-6 py-3 rounded-full focus:outline-none focus:border-primary transition-colors">
+                        <button type="submit" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 transform hover:-translate-y-1">
+                            订阅
+                        </button>
+                    </form>
+                    
+                    <p class="text-gray-500 text-sm mt-4">
+                        我们尊重您的隐私，不会向第三方分享您的信息
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-display font-bold text-white mb-4">维尔茨</h3>
+                    <p class="text-gray-400 mb-4">
+                        官方个人网站，展示尤利安·维尔茨的职业生涯、成就和最新动态。
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-youtube-play"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-primary transition-colors">首页</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-primary transition-colors">个人简介</a></li>
+                        <li><a href="#stats" class="text-gray-400 hover:text-primary transition-colors">比赛数据</a></li>
+                        <li><a href="#highlights" class="text-gray-400 hover:text-primary transition-colors">精彩瞬间</a></li>
+                        <li><a href="#news" class="text-gray-400 hover:text-primary transition-colors">最新动态</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">合作伙伴</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">勒沃库森足球俱乐部</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">德国足球协会</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">阿迪达斯</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary transition-colors">卡塔尔航空</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fa fa-envelope-o text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">contact@julianwirtz.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-map-marker text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">Bayer 04 Leverkusen<br>Ulrich-Haberland-Straße 50<br>51373 Leverkusen</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p class="text-gray-500 text-sm">
+                    &copy; 2024 尤利安·维尔茨官方网站. 保留所有权利.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // 导航栏滚动效果
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/95', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.remove('py-3');
+                navbar.classList.add('py-2');
+            } else {
+                navbar.classList.remove('bg-dark/95', 'backdrop-blur-md', 'shadow-lg');
+                navbar.classList.remove('py-2');
+                navbar.classList.add('py-3');
+            }
+        });
+        
+        // 移动端菜单切换
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+            } else {
+                menuBtn.innerHTML = '<i class="fa fa-times"></i>';
+            }
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // 关闭移动菜单（如果打开）
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuBtn.innerHTML = '<i class="fa fa-bars"></i>';
+                }
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
